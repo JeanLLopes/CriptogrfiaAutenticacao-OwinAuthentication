@@ -1,4 +1,6 @@
 ﻿
+using System.Security.Claims;
+using Microsoft.Owin.Security;
 using OwinAuthentication.Models;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace OwinAuthentication.Controllers
         // GET: Login
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -26,6 +29,23 @@ namespace OwinAuthentication.Controllers
         [HttpPost]
         public ActionResult Index(LoginModel login, string returnUrl)
         {
+            IAuthenticationManager manager = Request.GetOwinContext().Authentication;
+
+            //ADICIONAMOS AS REGRAS PARA O USUARIO
+            var list = new[]
+            {
+                new Claim(ClaimTypes.Name, "Jean"),
+                new Claim(ClaimTypes.Role, "Admin")
+            };
+
+
+            var properties = new AuthenticationProperties()
+            {
+                AllowRefresh = true
+            };
+
+            manager.SignIn(properties,new ClaimsIdentity(list));
+
             return View();
         }
 
