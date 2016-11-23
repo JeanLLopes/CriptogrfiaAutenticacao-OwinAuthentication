@@ -12,6 +12,8 @@ using System.Web.Security;
 
 namespace OwinAuthentication.Controllers
 {
+    //COM ESTE ANNOTATION ESTA CONTROLLER NAO ENTRARA NA REGRA DE AUTENTICAÇAP DA GLOBAL.asax
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         // GET: Login
